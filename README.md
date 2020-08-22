@@ -18,6 +18,15 @@ pip install -r requirements.txt
 
 ## Usage
 
+Set configuration environment variables:
+
+```
+export AXON_HOMESERVER=https://homeserver.url
+export AXON_TOKEN=M......x
+```
+
+You can obtain an admin Matrix token from any Matrix client.
+
 Get all commands using `--help`:
 
 ```
