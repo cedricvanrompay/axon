@@ -46,7 +46,7 @@ def update(userid, **kwargs):
 
 @user.command()
 @click.argument("userid")
-@click.option("--erase", type=bool)
+@click.option("--erase/--no-erase", default=False)
 def delete(userid, erase=False):
     """ Update a given user
     """
