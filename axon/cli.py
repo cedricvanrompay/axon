@@ -24,15 +24,11 @@ def user():
 def get(userid):
     """ Query a given user
     """
-    print(json.dumps(api.Client().get_user(userid)))
-
-
-@user.command()
-@click.argument("userid")
-def sessions(userid):
-    """ Query a given user sessions
-    """
-    print(json.dumps(api.Client().get_user_sessions(userid)))
+    client = api.Client()
+    user = client.get_user(userid)
+    user.update(client.get_user_sessions(userid))
+    user.update(client.get_user_rooms(userid))
+    print(json.dumps(user))
 
 
 @user.command()
@@ -55,7 +51,7 @@ def delete(userid, erase=False):
 
 @cli.group()
 def room():
-    """ Manager rooms
+    """ Manage rooms
     """
 
 
@@ -96,6 +92,22 @@ def list(reverse, search, **kwargs):
         reverse=reverse,
         search_term=search,
         **kwargs
+    )))
+
+
+@cli.group()
+def media():
+    """ Manage media
+    """
+
+
+@media.command()
+@click.option("--days", default=7, type=int)
+def purge(days):
+    """ Purge medias older than a number of days
+    """
+    print(json.dumps(api.Client().purge_remote_media(
+        days=days
     )))
 
 

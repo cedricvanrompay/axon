@@ -5,6 +5,7 @@ documentaiton.
 """
 
 import axon
+import datetime
 
 
 class Client(axon.BaseClient):
@@ -41,6 +42,13 @@ class Client(axon.BaseClient):
             "get", "/_synapse/admin/v1/whois/" + userid
         )
 
+    def get_user_rooms(self, userid):
+        """ Get a given user room list
+        """
+        return self.query(
+            "get", "/_synapse/admin/v1/users/" + userid + "/joined_rooms"
+        )
+
     def get_room(self, roomid):
         """ Get details about a room
         """
@@ -70,4 +78,16 @@ class Client(axon.BaseClient):
         return self.query(
             "get", "/_synapse/admin/v1/rooms",
             qs=kwargs
+        )
+
+    def purge_remote_media(self, days):
+        """ Purge remote medias older than a number of days
+        """
+        since = int((
+            datetime.datetime.now()
+            - datetime.timedelta(days=days)
+        ).timestamp() * 1000)
+        return self.query(
+            "post", "/_synapse/admin/v1/purge_media_cache",
+            qs={"before_ts": str(since)}
         )
