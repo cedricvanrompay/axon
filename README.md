@@ -54,5 +54,5 @@ python -m axon.cli user get @admin:tedomum.net | jq .joined_rooms
 Delete every room that a user belongs to:
 
 ```
-ython -m axon.cli user get @kaiyou:tedomum.net | jq -r '.joined_rooms[]' | python -m axon.cli room delete
+python -m axon.cli user get @kaiyou:tedomum.net | jq -r '.joined_rooms[]' | python -m axon.cli room delete
 ```
